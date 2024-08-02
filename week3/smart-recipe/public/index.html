@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookSMART</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="RecipeGenius Logo" class="logo-image">
+            <div class="logo-text">
+                <span class="cook">Cook</span><span class="smart">SMART</span>
+            </div>
+            
+        </div>
+    </header>
+
+
+    <div class="t2">
+        <strong>
+            <button type="button" class="Articles">Articles</button>
+            <button type="button" class="Collections">Collections</button>
+            <button type="button" class="ByCategory">By Category</button>
+            <button type="button" class="About">About</button>
+            <button type="button" class="auth-button">Sign In / Sign Up</button>
+        </strong>
+    </div>
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Sign In / Sign Up</h2>
+            <form>
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+                <button type="button" onclick="showSignUp()">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <form class="search-form">
+            <input type="text" placeholder="Search recipes..." class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

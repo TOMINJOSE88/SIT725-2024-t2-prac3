@@ -1,0 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-align: center;
+}
+
+header {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 10px solid #14253e;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; 
+}
+
+
+.logo-image {
+    width: 200px;
+    height: 200px;
+}
+
+.logo-text {
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 100px;  /* Adjust if necessary */
+    color: rgb(12, 12, 86);     /* Make sure this contrasts with the background */
+}
+
+.cook {
+    color: #FF6347; /* Example color: Tomato Red */
+    font-weight: bold;
+}
+
+.smart {
+    color: #14253e; /* Example color: Dodger Blue */
+    font-weight: bold;
+}
+
+.t2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.Articles {
+    padding: 8px 16px;
+    font-size: 23px;
+    color: #FF6347;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.Collections {
+    padding: 8px 16px;
+    font-size: 23px;
+    color: #FF6347;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ByCategory {
+    padding: 8px 16px;
+    font-size: 23px;
+    color: #FF6347;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.About {
+    padding: 8px 16px;
+    font-size: 23px;
+    color: #FF6347;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-button {
+    padding: 8px 16px;
+    font-size: 23px;
+    color: #FF6347;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-button:hover {
+    background-color: #ddd;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #1e0a81;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Could be more or less, depending on screen size */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.content-container {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 250px;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    width: 200px;
+}
+
+.search-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #FF6347;
+    background-color: #14253e;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #FF6347;
+}
