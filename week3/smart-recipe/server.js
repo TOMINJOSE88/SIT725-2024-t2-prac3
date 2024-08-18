@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const User = require('./models/User');
+const authController = require('./controllers/authController');  // Import authController
+const userController = require('./controllers/userController');  // Import userController
 const app = express();
 const PORT = 3000;
 
@@ -21,42 +22,21 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// Sign In route
-app.post('/auth/signin', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        let user = await User.findOne({ username });
-        if (user) {
-            const isMatch = await user.comparePassword(password);
-            if (isMatch) {
-                res.json({ message: 'Sign in successful', username: user.username });
-            } else {
-                res.status(401).json({ message: 'Invalid credentials' });
-            }
-        } else {
-            res.status(401).json({ message: 'Invalid credentials' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
+const path = require('path');
+
+// Serve the index.html from the views folder
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Sign Up route
-app.post('/auth/signup', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        let user = await User.findOne({ username });
-        if (user) {
-            res.status(400).json({ message: 'Username already exists' });
-        } else {
-            user = new User({ username, password });
-            await user.save();
-            res.json({ message: 'Sign up successful', username: user.username });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-});
+
+// Auth routes
+app.post('/auth/signin', authController.signIn);
+app.post('/auth/signup', authController.signUp);
+
+// User routes
+app.get('/user/:username', userController.getUserProfile);  // Get user profile
+app.put('/user/:username', userController.updateUserProfile);  // Update user profile
 
 // Start the server
 app.listen(PORT, () => {
