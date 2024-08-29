@@ -1,8 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const authController = require('./controllers/authController');  // Import authController
-const userController = require('./controllers/userController');  // Import userController
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { signIn, signUp } from './controllers/authController.js';  // Named imports
+import { getUserProfile, updateUserProfile } from './controllers/userController.js';  // Named imports
+import { getRecipes, getRecipeById } from './controllers/recipeController.js';  // Named imports
+
 const app = express();
 const PORT = 3000;
 
@@ -11,32 +15,38 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/cooksmart', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+(async () => {
+    try {
+        await mongoose.connect('mongodb://localhost:27017/cooksmart', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('Connection error:', error);
+    }
+})();
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log('Connected to MongoDB');
-});
-
-const path = require('path');
+// Resolve __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Serve the index.html from the views folder
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-
 // Auth routes
-app.post('/auth/signin', authController.signIn);
-app.post('/auth/signup', authController.signUp);
+app.post('/auth/signin', signIn);
+app.post('/auth/signup', signUp);
 
 // User routes
-app.get('/user/:username', userController.getUserProfile);  // Get user profile
-app.put('/user/:username', userController.updateUserProfile);  // Update user profile
+app.get('/user/:username', getUserProfile);  // Get user profile
+app.put('/user/:username', updateUserProfile);  // Update user profile
+
+// Recipe routes
+app.get('/recipes', getRecipes);  // Get all recipes
+app.get('/recipes/:id', getRecipeById);  // Get recipe by ID
 
 // Start the server
 app.listen(PORT, () => {

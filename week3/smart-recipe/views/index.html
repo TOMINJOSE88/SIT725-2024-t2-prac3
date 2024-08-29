@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="logo.png" alt="RecipeGenius Logo" class="logo-image">
+            <img src="logo.png" alt="CookSMART Logo" class="logo-image">
             <div class="logo-text">
                 <span class="cook">Cook</span><span class="smart">SMART</span>
             </div>
@@ -57,6 +57,7 @@
         </div>
     </div>
 
+    <!-- Search Form -->
     <div class="content-container">
         <form class="search-form">
             <input type="text" placeholder="Search recipes..." class="search-input">
@@ -64,6 +65,31 @@
         </form>
     </div>
 
+    <!-- Recipe Display Section -->
+    <div class="content-container">
+        <h1>Explore Recipes</h1>
+        <div id="recipe-container"></div>
+    </div>
+
     <script src="app.js"></script>
+    <script>
+        // Fetch all recipes and display them
+        fetch('/recipes')
+            .then(response => response.json())
+            .then(data => {
+                const recipeContainer = document.getElementById('recipe-container');
+                data.forEach(recipe => {
+                    const recipeElement = document.createElement('div');
+                    recipeElement.classList.add('recipe');
+                    recipeElement.innerHTML = `
+                        <h2>${recipe.name}</h2>
+                        <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                        <p><strong>Number of Ingredients:</strong> ${recipe.n_ingredients}</p>
+                    `;
+                    recipeContainer.appendChild(recipeElement);
+                });
+            })
+            .catch(error => console.error('Error fetching recipes:', error));
+    </script>
 </body>
 </html>

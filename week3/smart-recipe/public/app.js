@@ -1,46 +1,65 @@
 // Get the modals
-var signInModal = document.getElementById('signInModal');
-var signUpModal = document.getElementById('signUpModal');
+const signInModal = document.getElementById('signInModal');
+const signUpModal = document.getElementById('signUpModal');
+console.log('signUpModal:', signUpModal);  // Check if element is correctly referenced
 
 // Get the buttons that open the modals
-var signInButton = document.querySelector('.sign-in-button');
-var signUpButton = document.querySelector('.sign-up-button');
+const signInButton = document.querySelector('.sign-in-button');
+const signUpButton = document.querySelector('.sign-up-button');
 
 // Get the <span> elements that close the modals
-var closeButtons = document.getElementsByClassName("close-button");
+const closeButtons = document.getElementsByClassName("close-button");
 
-// When the user clicks the button, open the respective modal 
-signInButton.onclick = function() {
-    signInModal.style.display = "block";
+// Function to open a modal
+function openModal(modal) {
+    modal.style.display = "block";
+    console.log(modal.id + ' display:', modal.style.display); // Debugging log
+    
+    // Force style update (sometimes needed in JSDOM)
+    const forcedDisplay = window.getComputedStyle(modal).display;
+    console.log(modal.id + ' forced display:', forcedDisplay); // Confirm forced style update
 }
 
-signUpButton.onclick = function() {
-    signUpModal.style.display = "block";
+// Function to close a modal
+function closeModal(modal) {
+    modal.style.display = "none";
+    console.log(modal.id + ' display:', modal.style.display); // Debugging log
 }
 
-// When the user clicks on <span> (x), close the modal
-for (var i = 0; i < closeButtons.length; i++) {
-    closeButtons[i].onclick = function() {
-        signInModal.style.display = "none";
-        signUpModal.style.display = "none";
+// Event listeners for opening the modals
+signInButton.addEventListener('click', () => {
+    console.log('Sign In button clicked');
+    openModal(signInModal);
+});
+
+signUpButton.addEventListener('click', () => {
+    console.log('Sign Up button clicked');
+    openModal(signUpModal);
+});
+
+// Event listeners for closing the modals using close buttons
+Array.from(closeButtons).forEach(button => {
+    button.addEventListener('click', () => {
+        closeModal(signInModal);
+        closeModal(signUpModal);
+    });
+});
+
+// Close the modal if the user clicks outside of it
+window.addEventListener('click', event => {
+    if (event.target === signInModal) {
+        closeModal(signInModal);
+    } else if (event.target === signUpModal) {
+        closeModal(signUpModal);
     }
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == signInModal) {
-        signInModal.style.display = "none";
-    } else if (event.target == signUpModal) {
-        signUpModal.style.display = "none";
-    }
-}
+});
 
 // Handle Sign In form submission with AJAX
 document.getElementById('signInForm').addEventListener('submit', function(e) {
     e.preventDefault();  // Prevent default form submission behavior
 
-    var username = document.getElementById('signInUsername').value;
-    var password = document.getElementById('signInPassword').value;
+    const username = document.getElementById('signInUsername').value;
+    const password = document.getElementById('signInPassword').value;
 
     // AJAX request to server-side script for Sign In
     fetch('/auth/signin', {
@@ -48,7 +67,7 @@ document.getElementById('signInForm').addEventListener('submit', function(e) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: username, password: password })
+        body: JSON.stringify({ username, password })
     })
     .then(response => response.json())
     .then(data => {
@@ -57,8 +76,8 @@ document.getElementById('signInForm').addEventListener('submit', function(e) {
             document.getElementById('user-info-container').style.display = 'flex';
             signInButton.style.display = 'none';
             signUpButton.style.display = 'none';
+            closeModal(signInModal);  // Optionally close modal on success
         }
-        signInModal.style.display = "none";  // Optionally close modal on success
     })
     .catch(error => console.error('Error:', error));
 });
@@ -67,8 +86,8 @@ document.getElementById('signInForm').addEventListener('submit', function(e) {
 document.getElementById('signUpForm').addEventListener('submit', function(e) {
     e.preventDefault();  // Prevent default form submission behavior
 
-    var username = document.getElementById('signUpUsername').value;
-    var password = document.getElementById('signUpPassword').value;
+    const username = document.getElementById('signUpUsername').value;
+    const password = document.getElementById('signUpPassword').value;
 
     // AJAX request to server-side script for Sign Up
     fetch('/auth/signup', {
@@ -76,7 +95,7 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: username, password: password })
+        body: JSON.stringify({ username, password })
     })
     .then(response => response.json())
     .then(data => {
@@ -85,8 +104,8 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
             document.getElementById('user-info-container').style.display = 'flex';
             signInButton.style.display = 'none';
             signUpButton.style.display = 'none';
+            closeModal(signUpModal);  // Optionally close modal on success
         }
-        signUpModal.style.display = "none";  // Optionally close modal on success
     })
     .catch(error => console.error('Error:', error));
 });
